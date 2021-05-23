@@ -3,9 +3,11 @@ var Schema = mongoose.Schema;
 
 const softwareSchema = new Schema(
     {
-        username:{type:String, required:true},
-        name:{type:String, required:true},
-        description:{type:String, required: true},
+        username:{type:String},
+        name:{type:String},
+        description:{type:String},
+        link:{type:String},
+        pricing:{type:String}
     },
     {
         timestamps:true

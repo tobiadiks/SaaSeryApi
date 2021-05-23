@@ -26,6 +26,14 @@ const softwareRoute = require("./routes/software");
 
 // app.use('/app',softwareRoute);
 app.use('/u',userRoute);
+app.use('/app', softwareRoute);
+
+const clientId = process.env.C_ID;
+const clientSecret = process.env.C_SECRET;
+
+app.get('/', (req, res) => {
+  res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
+}); //callback url
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
