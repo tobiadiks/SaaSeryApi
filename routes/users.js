@@ -17,7 +17,7 @@ router.route('/:id').get((req,res) => {
 router.route('/signup').post(passport.authenticate('local'),(req,res)=> {
     User.register(new User({username: req.body.username, email: req.body.email}),
     req.body.password,(err,user)=> {
-        if(err) {
+        if(errz) {
             res.status(500);
             res.setHeader('Content-Type','application/json');
             res.json({err:err, success:false, status:'Registration UnSuccessful Please Try Again'});
@@ -33,7 +33,7 @@ router.route('/signup').post(passport.authenticate('local'),(req,res)=> {
 
 router.route('/login').post(passport.authenticate('local', session=true),(req, res) => {
     
-      if(res.statusCode = 200){
+      if(req.user){
       res.setHeader('Content-Type', 'application/json');
       res.json({
         success: true,
@@ -42,23 +42,30 @@ router.route('/login').post(passport.authenticate('local', session=true),(req, r
       });
     }
     else{
-      res.statusCode = 401;
       res.setHeader('Content-Type', 'application/json');
       res.json({
-        success: true,
-        status: `Incorrect Username or password  ${req.user}`,
-        user:req.user.username
+        success: false,
+        status: 'Incorrect Username or password'
       });
     }
   });
   
 //Done
     router.route('/logout').post(passport.authenticate('local', session=true),(req, res) => {
-  req.logout();
-  res.json({
-    success: true,
-    status: 'You are successfully logged out! '
+      if(req.user){
+      req.logout();
+      res.json({
+      success: true,
+      status: 'You are successfully logged out! '
   });
+}
+      
+      else{
+        res.json({
+          success: false,
+          status: 'You were not Logged In!'
+      });
+      }
     });
 
 module.exports = router;

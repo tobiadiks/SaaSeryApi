@@ -47,6 +47,7 @@ connection.once("open", () => {
 
 const userRoute = require("./routes/users");
 const softwareRoute = require("./routes/software");
+const { options } = require("./routes/users");
 
 app.use("/u", userRoute);
 app.use("/app", softwareRoute);
